@@ -1,3 +1,8 @@
+DROP TABLE inventory;
+DROP TABLE trades;
+DROP TABLE items;
+DROP TABLE teams;
+DROP TABLE users;
 DROP TYPE IF EXISTS gaming_platform;
 DROP TYPE IF EXISTS user_rank;
 DROP TYPE IF EXISTS rank_division;
@@ -7,8 +12,3 @@ DROP TYPE IF EXISTS item_certification;
 DROP TYPE IF EXISTS item_name;
 DROP TYPE IF EXISTS item_rarity;
 DROP TYPE IF EXISTS item_special_edition;
-DROP TABLE users;
-DROP TABLE items;
-DROP TABLE teams;
-DROP TABLE trades;
-DROP TABLE inventory;
