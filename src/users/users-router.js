@@ -72,7 +72,7 @@ usersRouter.route('/')
                     division, 
                     lft, 
                     email,
-                    password, 
+                    password: hashedPassword, 
                     bio
                 };
             return UsersService.insertUser(
@@ -103,8 +103,9 @@ usersRouter.route('/')
     const requiredFields = {
         lname, platform, gamertag, rocket_id, rank, division, lft
     };
+
     const numberOfValues = Object.values(requiredFields).filter(Boolean).length;
-    if (numberOfValues === 0) {
+    if (numberOfValues === 0 && lft !== false) {
       return res.status(400).json({
         error: {
           message: 'Request body must contain either \'lname\', \'platform\', \'gamertag\', \'rocket_id\', \'rank\', \'division\', \'lft\'',
