@@ -4,6 +4,7 @@ const usersRouter = express.Router();
 const bodyParser = express.json();
 const logger = require('../logger');
 const xss = require('xss');
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const serializeUser = (user) => ({
   id: user.id,
@@ -22,7 +23,7 @@ const serializeUser = (user) => ({
 });
 
 usersRouter.route('/')
-.get((req, res, next) => {
+.get(requireAuth, (req, res, next) => {
     UsersService.getAllUsers(req.app.get('db'))
     .then((users) => {
       res.json(users);
@@ -87,7 +88,7 @@ usersRouter.route('/')
     })
     .catch(next);
 })
-.patch(bodyParser, (req, res, next) => {
+.patch(requireAuth, bodyParser, (req, res, next) => {
     const userid = req.user.id;
     const {
         lname, 
@@ -127,7 +128,7 @@ usersRouter.route('/')
       })
       .catch(next);
   })
-  .delete((req, res, next) => {
+  .delete(requireAuth, (req, res, next) => {
       UsersService.deleteUser(res.app.get('db'), req.user.id)
         .then((count) => {
           if (count === 0) {
@@ -145,6 +146,7 @@ usersRouter.route('/')
 
     usersRouter
     .route('/:userid')
+    .all(requireAuth)
     .all((req, res, next) => {
       UsersService.getUserById(
         req.app.get('db'),
