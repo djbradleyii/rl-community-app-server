@@ -23,7 +23,7 @@ app.use(cors());
 
 app.use('/api/users', usersRouter);
 app.use('/api/teams', teamsRouter);
-app.user('/api/items', itemsRouter);
+app.use('/api/items', itemsRouter);
 
 app.use((error, req, res, next) => {
   let response;
