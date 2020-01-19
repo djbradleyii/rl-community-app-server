@@ -3,6 +3,7 @@ const ItemsService = require('./items-service');
 const itemsRouter = express.Router();
 const bodyParser = express.json();
 const { requireAuth } = require('../middleware/jwt-auth');
+const logger = require('../logger');
 
 itemsRouter.route('/')
 .get(requireAuth, (req, res, next) => {
@@ -13,7 +14,6 @@ itemsRouter.route('/')
 })
 .post(requireAuth, bodyParser, (req, res, next) => {
     const { category, item, painted, rarity, certified, special_edition } = req.body;
-
     userid = req.user.id;
 
     const requiredFields = {
