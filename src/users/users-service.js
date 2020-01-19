@@ -18,22 +18,22 @@ const UsersService = {
       .from('users');
   },
   getUserById(knex, userid){
-      return knex.select(
-        'id',
-        'fname',
-        'lname',
-        'platform',
-        'gamertag',
-        'rocket_id',
-        'rank',
-        'division',
-        'lft',
-        'bio',
-        'date_created'
-      )
-      .from('users')
-      .where('id', userid)
-      .first();
+    return knex.select(
+      'id',
+      'fname',
+      'lname',
+      'platform',
+      'gamertag',
+      'rocket_id',
+      'rank',
+      'division',
+      'lft',
+      'bio',
+      'date_created'
+    )
+    .from('users')
+    .where('id', userid)
+    .first();
   },
   insertUser(knex, newUser) {
     return knex
