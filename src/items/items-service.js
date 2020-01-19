@@ -16,6 +16,7 @@ const ItemsService = {
             .insert(newItem)
             .into('items')
             .returning('*')
+            .then(([item]) => item);
     },
     removeItem(knex, userid, itemid){
         return knex('items')
