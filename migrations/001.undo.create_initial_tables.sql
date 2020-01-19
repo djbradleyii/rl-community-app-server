@@ -1,5 +1,3 @@
-DROP TABLE inventory;
-DROP TABLE trades;
 DROP TABLE items;
 DROP TABLE teams;
 DROP TABLE users;
