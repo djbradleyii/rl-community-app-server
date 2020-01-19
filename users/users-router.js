@@ -109,4 +109,21 @@ usersRouter.route('/')
       })
       .catch(next);
   })
+  .delete((req, res, next) => {
+      UsersService.deleteUser(res.app.get('db'), req.user.id)
+        .then((count) => {
+          if (count === 0) {
+            return res.status(404).json({
+              error: { message: 'User does not exist' },
+            });
+          }
+          res
+            .status(204)
+            .end();
+        })
+        .catch(next);
+      logger.info(`User with id ${req.user.id} deleted.`);
+    });
+
+
 module.exports = usersRouter;
