@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const usersRouter = require('../users/users-router');
+const UsersService = require('../users/users-service');
 
 const app = express();
 
@@ -20,13 +21,6 @@ app.use(cors());
 /* ROUTES */
 
 app.use('/api/users', usersRouter);
-
-app.get('/users/:userid', (req, res) => {
-  UsersService.getUserById(req.app.get('db'), req.params.userid)
-  .then((users) => {
-    res.json(users);
-  })
-})
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
