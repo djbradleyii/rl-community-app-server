@@ -52,6 +52,12 @@ const UsersService = {
       ])
       .then(([user]) => user);
   },
+  getAllItemsByUserId(knex, userid){
+    return knex
+        .select('*')
+        .from('items')
+        .where('userid', userid)
+  },
   validatePassword(password) {
     // password length
     if (password.length < 8 || password.length > 72) {
