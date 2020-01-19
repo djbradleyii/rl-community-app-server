@@ -11,6 +11,7 @@ const TeamsService = {
                 'rank',
                 'division',
                 'bio',
+                'lft',
                 'date_created'
             )
             .from('users')
