@@ -28,7 +28,8 @@ const UsersService = {
         'rank',
         'division',
         'lft',
-        'bio'
+        'bio',
+        'date_created'
       )
       .from('users')
       .where('id', userid)
