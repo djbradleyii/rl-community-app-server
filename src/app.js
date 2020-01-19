@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+const usersRouter = require('../users/users-router');
 
 const app = express();
 
@@ -15,6 +16,17 @@ app.use(morgan(morganOption));
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+
+/* ROUTES */
+
+app.use('/api/users', usersRouter);
+
+app.get('/users/:userid', (req, res) => {
+  UsersService.getUserById(req.app.get('db'), req.params.userid)
+  .then((users) => {
+    res.json(users);
+  })
+})
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
