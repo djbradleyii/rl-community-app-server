@@ -30,7 +30,7 @@ usersRouter.route('/')
     })
     .catch(next)
   })
-.post(bodyParser, (req, res, next) => {
+.post(requireAuth, bodyParser, (req, res, next) => {
     const {
       fname, lname, platform, gamertag, rocket_id, rank, division, lft, email, bio, password
     } = req.body;
@@ -166,8 +166,20 @@ usersRouter.route('/')
     .get((req, res, next) => {
       UsersService.getAllItemsByUserId(req.app.get('db'), req.params.userid)
       .then((items) => {
+        let user = serializeUser(req.user)
+        const { platform, gamertag, rocket_id, rank, division, lft, bio } = user;
+        user = {
+          platform,
+          gamertag,
+          rocket_id,
+          rank,
+          division,
+          lft,
+          bio
+        }
+
         res.json({
-          user: serializeUser(req.user),
+          user,
           inventory: items}
           );
         next();
