@@ -2,13 +2,22 @@ const express = require('express');
 const ItemsService = require('./items-service');
 const itemsRouter = express.Router();
 const bodyParser = express.json();
+const { requireAuth } = require('../middleware/jwt-auth');
 
 itemsRouter.route('/')
-.post(bodyParser, (req, res, next) => {
-    const { userid, category, item, painted, rarity, certified, special_edition, date_created } = req.body;
-    
+.get(requireAuth, (req, res, next) => {
+  ItemsService.getAllItems(req.app.get('db'))
+  .then((items) => {
+    res.json(items);
+  })
+})
+.post(requireAuth, bodyParser, (req, res, next) => {
+    const { category, item, painted, rarity, certified, special_edition } = req.body;
+
+    userid = req.user.id;
+
     const requiredFields = {
-        userid, category, item, rarity, date_created
+        userid, category, item, rarity,
     };
 
     for (const [key, value] of Object.entries(requiredFields)) {
@@ -26,18 +35,15 @@ itemsRouter.route('/')
         painted, 
         rarity, 
         certified, 
-        special_edition,
-        date_created
+        special_edition
     }
-
-    
-    Items.addItem(req.app.get('db'), userid, newItem)
+    ItemsService.addItem(req.app.get('db'), newItem)
     .then((item) => {
       res.json(item);
     })
     .catch(next)
   })
-  .delete((req, res, next) => {
+  .delete(requireAuth, (req, res, next) => {
       const { itemid } = req.body; 
 
       ItemsService.removeItem(res.app.get('db'), req.user.id, itemid)
