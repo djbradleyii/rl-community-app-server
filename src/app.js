@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const teamsRouter = require('./teams/teams-router');
 const itemsRouter = require('./items/items-router');
@@ -21,6 +22,7 @@ app.use(cors());
 
 /* ROUTES */
 
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/items', itemsRouter);
