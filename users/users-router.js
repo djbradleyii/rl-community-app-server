@@ -69,5 +69,44 @@ usersRouter.route('/')
     })
     .catch(next);
 })
+.patch(bodyParser, (req, res, next) => {
+    const userid = req.user.id;
+    const {
+        lname, 
+        platform, 
+        gamertag, 
+        rocket_id, 
+        rank, 
+        division, 
+        lft, 
+        bio
+    } = req.body;
+    const requiredFields = {
+        lname, platform, gamertag, rocket_id, rank, division, lft
+    };
+    const numberOfValues = Object.values(requiredFields).filter(Boolean).length;
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: 'Request body must contain either \'lname\', \'platform\', \'gamertag\', \'rocket_id\', \'rank\', \'division\', \'lft\'',
+        },
+      });
+    }
 
+    const updates = {
+        lname, 
+        platform, 
+        gamertag, 
+        rocket_id, 
+        rank, 
+        division, 
+        lft, 
+        bio
+    };
+    UsersService.updateUserById(req.app.get('db'), userid, updates)
+      .then((numUsersAffected) => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
 module.exports = usersRouter;
