@@ -125,5 +125,26 @@ usersRouter.route('/')
       logger.info(`User with id ${req.user.id} deleted.`);
     });
 
+    usersRouter
+    .route('/:userid')
+    .all((req, res, next) => {
+      UsersService.getUserById(
+        req.app.get('db'),
+        parseInt(req.params.userid),
+      )
+        .then((user) => {
+          if (!user) {
+            return res.status(404).json({
+              error: { message: 'User doesn\'t exist' },
+            });
+          }
+          req.user = user;
+          next();
+        })
+        .catch(next);
+    })
+    .get((req, res, next) => {
+      res.json(serializeUser(req.user));
+    });
 
 module.exports = usersRouter;
