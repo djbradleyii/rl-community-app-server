@@ -136,6 +136,7 @@ CREATE TABLE items (
     rarity item_rarity NOT NULL,
     certified item_certification NULL,
     special_edition item_special_edition NULL,
+    count INTEGER DEFAULT 1,
     date_created TIMESTAMP DEFAULT now() NOT NULL
 );
 
