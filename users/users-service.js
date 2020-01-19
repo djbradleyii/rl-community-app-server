@@ -58,6 +58,11 @@ const UsersService = {
         .from('items')
         .where('userid', userid)
   },
+  deleteUser(knex, userid) {
+    return knex('users')
+      .where({ id: userid })
+      .delete();
+  },
   validatePassword(password) {
     // password length
     if (password.length < 8 || password.length > 72) {
