@@ -3,19 +3,20 @@ const UsersService = require('./users-service');
 const usersRouter = express.Router();
 const bodyParser = express.json();
 const logger = require('../logger');
+const xss = require('xss');
 
 const serializeUser = (user) => ({
   id: user.id,
   fname: xss(user.fname), 
   lname: xss(user.lname), 
-  platform: xss(platform), 
-  gamertag: xss(gamertag), 
-  rocket_id: xss(rocket_id), 
-  rank: xss(rank), 
-  division: xss(division), 
-  lft: xss(lft), 
-  email: xss(email),
-  password: xss(password), 
+  platform: xss(user.platform), 
+  gamertag: xss(user.gamertag), 
+  rocket_id: xss(user.rocket_id), 
+  rank: xss(user.rank), 
+  division: xss(user.division), 
+  lft: user.lft, 
+  email: xss(user.email),
+  password: xss(user.password), 
   bio: xss(user.bio),
   date_created: new Date(user.date_created),
 });
@@ -161,6 +162,7 @@ usersRouter.route('/')
         .catch(next);
     })
     .get((req, res, next) => {
+      console.log(req.user);
       res.json(serializeUser(req.user));
     });
 
