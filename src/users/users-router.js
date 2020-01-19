@@ -150,20 +150,27 @@ usersRouter.route('/')
         req.app.get('db'),
         parseInt(req.params.userid),
       )
-        .then((user) => {
-          if (!user) {
-            return res.status(404).json({
-              error: { message: 'User doesn\'t exist' },
-            });
-          }
-          req.user = user;
-          next();
-        })
-        .catch(next);
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            error: { message: 'User doesn\'t exist' },
+          });
+        }
+        req.user = user;
+        next();
+      })
+      .catch(next);
     })
     .get((req, res, next) => {
-      console.log(req.user);
-      res.json(serializeUser(req.user));
+      UsersService.getAllItemsByUserId(req.app.get('db'), req.params.userid)
+      .then((items) => {
+        res.json({
+          user: serializeUser(req.user),
+          inventory: items}
+          );
+        next();
+      })
+      .catch(next);
     });
 
 module.exports = usersRouter;
