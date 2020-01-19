@@ -5,4 +5,6 @@ module.exports = {
     //CLIENT_ORIGIN: 'http://localhost:3000',
     DATABASE_URL: process.env.DATABASE_URL || 'postgresql://dbradley:password@localhost/rl-community-app',
     TEST_DATABASE_URL: 'postgresql://dbradley:password@localhost/rl-community-app-test',
+    JWT_SECRET: process.env.JWT_SECRET || 'superdupersecretword',
+    JWT_EXPIRY: process.env.JWT_EXPIRY || '12h',
   }
