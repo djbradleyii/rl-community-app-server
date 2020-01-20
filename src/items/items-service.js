@@ -1,8 +1,23 @@
 const ItemsService = {
     getAllItems(knex){
         return knex
-            .select('*')
+            .select(
+                "userid",
+                "gamertag", 
+                "rocket_id", 
+                "rank", 
+                "division", 
+                "lft", 
+                "category", 
+                "name", 
+                "painted", 
+                "rarity", 
+                "certified", 
+                "special_edition", 
+                "count"
+            )
             .from('items')
+            .leftJoin("users", "users.id", "items.userid")
     },
     getItemById(knex, itemid){
         return knex
