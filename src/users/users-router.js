@@ -30,7 +30,7 @@ usersRouter.route('/')
     })
     .catch(next)
   })
-.post(requireAuth, bodyParser, (req, res, next) => {
+.post(bodyParser, (req, res, next) => {
     const {
       fname, lname, platform, gamertag, rocket_id, rank, division, lft, email, bio, password
     } = req.body;
@@ -146,6 +146,43 @@ usersRouter.route('/')
     });
 
     usersRouter
+    .route('/stats')
+    .all(requireAuth)
+    .get((req, res, next) => {
+      UsersService.getUserById(
+        req.app.get('db'),
+        parseInt(req.user.id),
+      )
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            error: { message: 'User doesn\'t exist' },
+          });
+        }
+        
+        UsersService.getAllItemsByUserId(req.app.get('db'), req.user.id)
+        .then((items) => {
+          user = serializeUser(user);
+          res.json({
+            stats: {
+              id: req.user.id,
+              gamertag: user.gamertag,
+              rocket_id: user.rocket_id,
+              platform: user.platform,
+              rank: user.rank,
+              division: user.division,
+              lft: user.lft,
+              bio: user.bio
+            },
+            inventory: items}
+            );
+          next();
+        })
+      })
+      .catch(next);
+    });
+
+    usersRouter
     .route('/:userid')
     .all(requireAuth)
     .get((req, res, next) => {
@@ -159,7 +196,6 @@ usersRouter.route('/')
             error: { message: 'User doesn\'t exist' },
           });
         }
-
 
         UsersService.getAllItemsByUserId(req.app.get('db'), user.id)
         .then((items) => {
