@@ -148,7 +148,7 @@ usersRouter.route('/')
     usersRouter
     .route('/:userid')
     .all(requireAuth)
-    .all((req, res, next) => {
+    .get((req, res, next) => {
       UsersService.getUserById(
         req.app.get('db'),
         parseInt(req.params.userid),
@@ -159,31 +159,27 @@ usersRouter.route('/')
             error: { message: 'User doesn\'t exist' },
           });
         }
-        req.user = user;
-        next();
-      })
-      .catch(next);
-    })
-    .get((req, res, next) => {
-      UsersService.getAllItemsByUserId(req.app.get('db'), req.params.userid)
-      .then((items) => {
-        let user = serializeUser(req.user)
-        const { platform, gamertag, rocket_id, rank, division, lft, bio } = user;
-        user = {
-          platform,
-          gamertag,
-          rocket_id,
-          rank,
-          division,
-          lft,
-          bio
-        }
 
-        res.json({
-          user,
-          inventory: items}
-          );
-        next();
+
+        UsersService.getAllItemsByUserId(req.app.get('db'), user.id)
+        .then((items) => {
+
+          user = serializeUser(user);
+          res.json({
+            user: {
+              id: user.id,
+              gamertag: user.gamertag,
+              rocket_id: user.rocket_id,
+              platform: user.platform,
+              rank: user.rank,
+              division: user.division,
+              lft: user.lft,
+              bio: user.bio
+            },
+            inventory: items}
+            );
+          next();
+        })
       })
       .catch(next);
     });
