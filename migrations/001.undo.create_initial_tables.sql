@@ -1,5 +1,5 @@
-DROP TABLE items;
 DROP TABLE teams;
+DROP TABLE items;
 DROP TABLE users;
 DROP TYPE IF EXISTS gaming_platform;
 DROP TYPE IF EXISTS user_rank;
