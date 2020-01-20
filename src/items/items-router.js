@@ -13,11 +13,11 @@ itemsRouter.route('/')
   })
 })
 .post(requireAuth, bodyParser, (req, res, next) => {
-    const { category, item, painted, rarity, certified, special_edition } = req.body;
+    const { category, name, painted, rarity, certified, special_edition } = req.body;
     userid = req.user.id;
 
     const requiredFields = {
-        userid, category, item, rarity,
+        userid, category, name, rarity,
     };
 
     for (const [key, value] of Object.entries(requiredFields)) {
@@ -31,7 +31,7 @@ itemsRouter.route('/')
     const newItem = {
         userid, 
         category, 
-        item, 
+        name, 
         painted, 
         rarity, 
         certified, 
