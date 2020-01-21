@@ -4,12 +4,23 @@ const itemsRouter = express.Router();
 const bodyParser = express.json();
 const { requireAuth } = require('../middleware/jwt-auth');
 const logger = require('../logger');
+const xss = require('xss');
+
+const serializeItem = (item) => ({
+  userid: item.userid,
+  category: xss(item.category), 
+  name: xss(item.name), 
+  painted: item.painted, 
+  rarity: item.rarity, 
+  certified: item.certified, 
+  special_edition: item.special_edition
+});
 
 itemsRouter.route('/')
 .get(requireAuth, (req, res, next) => {
   ItemsService.getAllItems(req.app.get('db'))
   .then((items) => {
-    res.json(items);
+    res.json(items.map(serializeItem));
   })
 })
 .post(requireAuth, bodyParser, (req, res, next) => {
@@ -17,7 +28,7 @@ itemsRouter.route('/')
     userid = req.user.id;
 
     const requiredFields = {
-        userid, category, name, rarity,
+        userid, category, name, rarity
     };
 
     for (const [key, value] of Object.entries(requiredFields)) {
@@ -39,7 +50,7 @@ itemsRouter.route('/')
     }
     ItemsService.addItem(req.app.get('db'), newItem)
     .then((item) => {
-      res.json(item);
+      res.json(item.map(serializeItem));
     })
     .catch(next)
   })
