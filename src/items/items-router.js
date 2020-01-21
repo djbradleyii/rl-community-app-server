@@ -8,6 +8,12 @@ const xss = require('xss');
 
 const serializeItem = (item) => ({
   userid: item.userid,
+  platform: item.platform, 
+  gamertag: xss(item.gamertag), 
+  rocket_id: xss(item.rocket_id), 
+  rank: item.rank, 
+  division: item.division, 
+  lft: item.lft, 
   category: xss(item.category), 
   name: xss(item.name), 
   painted: item.painted, 

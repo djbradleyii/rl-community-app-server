@@ -3,6 +3,7 @@ const ItemsService = {
         return knex
             .select(
                 "userid",
+                "platform",
                 "gamertag", 
                 "rocket_id", 
                 "rank", 
