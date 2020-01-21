@@ -174,7 +174,6 @@ usersRouter.route('/')
             },
             inventory: items}
             );
-          next();
         })
       })
       .catch(next);
@@ -212,7 +211,6 @@ usersRouter.route('/')
             },
             inventory: items}
             );
-          next();
         })
       })
       .catch(next);
