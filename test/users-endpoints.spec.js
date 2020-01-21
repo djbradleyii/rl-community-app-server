@@ -398,7 +398,6 @@ describe('Users Endpoints', () => {
               .get('/api/users')
               .set('Authorization', makeAuthHeader(testUsers[idToRemove - 1]))
               .expect((res) => {
-                console.log(res);
                 expect(res.body).to.have.lengthOf(2);
               });
           });
