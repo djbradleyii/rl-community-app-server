@@ -48,9 +48,11 @@ itemsRouter.route('/')
         certified, 
         special_edition
     }
+
+    
     ItemsService.addItem(req.app.get('db'), newItem)
     .then((item) => {
-      res.json(item.map(serializeItem));
+      res.json(item);
     })
     .catch(next)
   })
