@@ -10,11 +10,11 @@ const serializeUser = (user) => ({
   id: user.id,
   fname: xss(user.fname), 
   lname: xss(user.lname), 
-  platform: xss(user.platform), 
+  platform: user.platform, 
   gamertag: xss(user.gamertag), 
   rocket_id: xss(user.rocket_id), 
-  rank: xss(user.rank), 
-  division: xss(user.division), 
+  rank: user.rank, 
+  division: user.division, 
   lft: user.lft, 
   email: xss(user.email),
   password: xss(user.password), 
@@ -26,7 +26,7 @@ usersRouter.route('/')
 .get(requireAuth, (req, res, next) => {
     UsersService.getAllUsers(req.app.get('db'))
     .then((users) => {
-      res.json(users);
+      res.json(users.map(serializeUser));
     })
     .catch(next)
   })
