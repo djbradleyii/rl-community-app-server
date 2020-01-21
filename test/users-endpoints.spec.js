@@ -466,7 +466,7 @@ describe('Users Endpoints', () => {
           .set('Authorization', makeAuthHeader(testUsers[0]))
           .send({ irrelevantField: 'foo' })
           .expect(400, {
-            error: { message: 'Request body must contain either \'lname\', \'platform\', \'gamertag\', \'rocket_id\', \'rank\', \'division\', \'lft\'' },
+            error: { message: 'Request body must contain either \'platform\', \'gamertag\', \'rocket_id\', \'rank\', \'division\', \'lft\'' },
           });
       });
 
