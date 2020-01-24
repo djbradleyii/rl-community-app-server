@@ -17,6 +17,18 @@ Rocket League Community App Server serving up the RESTful API to the Rocket Leag
     * GET
     * POST
     * DELETE
+    
+    * Sample Call
+  ```javascript
+  fetch(`${config.API_ENDPOINT}/users`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  })
+  ```
+
 
 ## Built with
 * NodeJS
