@@ -25,8 +25,7 @@ Rocket League Community App Server serving up the RESTful API to the Rocket Leag
    method: 'GET',
    headers: {
      'content-type': 'application/json',
-   },
-   body: JSON.stringify(user),
+   }
  })
  ```
  * Sample Response
