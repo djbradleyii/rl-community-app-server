@@ -54,9 +54,9 @@ Rocket League Community App Server serving up the RESTful API to the Rocket Leag
    special_edition: "Infinite",
    count: 1,
    date_created: "2020-01-23T14:00:31.000Z"
-  }
- ]
-}
+   }
+  ]
+ }
  ```
  
 ## Built with
