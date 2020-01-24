@@ -8,6 +8,7 @@ const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const teamsRouter = require('./teams/teams-router');
 const itemsRouter = require('./items/items-router');
+const {CLIENT_ORIGIN} = require('./config');
 
 const app = express();
 
@@ -18,7 +19,12 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption));
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+
+app.use(
+  cors({
+      origin: CLIENT_ORIGIN
+  })
+);
 
 /* ROUTES */
 
